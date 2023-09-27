@@ -1,0 +1,21 @@
+<div (click)="getVideoDetails(video)" class="card">
+  <div class="p-1">
+    <video
+      crossorigin="anonymous"
+      [poster]="video.previewUrl"
+      controls
+      width="300"
+      height="200"
+    ></video>
+  </div>
+  <div class="p-1">
+    <h5 class="card-title">{{ video.title }}</h5>
+  </div>
+  <div class="p-1 d-flex align-items-center">
+    <p class="m-1 flex-row flex-grow-1">
+      {{ video.createdDate | date : "dd/MM/yy" }}
+    </p>
+    <img src="{{ video.author.pictureUrl }}" alt="" />
+    <p class="m-1">{{ video.author.name }}</p>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+.toggler-inactive {
+  color: grey; /* Default grey color */
+  box-shadow: none; /* No box shadow by default */
+  transition: color 0.3s, background-color 0.3s; /* Add transition for smooth effects */
+}
+
+.toggler-active {
+  color: #000;
+  background-color: #cccccc;
+}
+
+.view-toggle {
+  display: flex;
+  flex-direction: row-reverse;
+
+  .list-button,
+  .grid-button {
+    @extend .toggler-inactive;
+    &.active {
+      @extend .toggler-active;
+    }
+  }
+
+  :first-child {
+    order: 1;
+  }
+  button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: grey; /* Default grey color */
+    cursor: pointer;
+    margin-right: 10px; /* Adjust the spacing between buttons */
+    transition: color 0.3s, box-shadow 0.3s; /* Add transition for smooth effects */
+  }
+}

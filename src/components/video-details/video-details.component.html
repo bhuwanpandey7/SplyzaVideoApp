@@ -1,0 +1,96 @@
+<!-- Back Button -->
+<div style="left: 6.2rem" class="m-2 ml-5" *ngIf="video && video.url">
+  <!-- Video Player -->
+  <button
+    class="btn btn-link btn-link-primary text-sm"
+    (click)="goToVideoList()"
+  >
+    <i class="bi bi-arrow-left"></i>
+    Back
+  </button>
+  <div class="container d-flex flex-row gap-1 pt-2 pb-2">
+    <input
+      #title
+      style="max-width: 530px"
+      class="form-control"
+      type="text"
+      [value]="video.title"
+      [title]="video.title"
+      [contentEditable]="true"
+    />
+    <input
+      type="button"
+      (click)="saveTitle(title.value)"
+      class="btn btn-primary btn-md active"
+      value="Save"
+    />
+  </div>
+  <div class="container d-flex flex-row gap-1 pb-2">
+    <video
+      [poster]="video.previewUrl"
+      *ngIf="video?.url !== null"
+      controls
+      width="600"
+      height="400"
+      #videoPlayer
+    >
+      <source [src]="video.url" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Reaction Buttons -->
+  <div class="container d-flex flex-row gap-1 pb-1" style="left: 4.5rem">
+    <button class="btn btn-light" (click)="addReaction('Snapshot')">
+      <i class="bi bi-camera"></i>
+      Snapshot
+    </button>
+    <button class="btn btn-light" (click)="addReaction('Star')">
+      <i class="bi bi-star-fill"></i>
+      Star
+    </button>
+  </div>
+
+  <!-- Reactions List -->
+  <div
+    style="left: 6.2rem; position: relative"
+    class="d-flex flex-column gap-1 pb-1 reactions-list"
+  >
+    <h4>Reactions</h4>
+    <ng-container *ngIf="reactions && reactions.length > 0">
+      <div
+        style="
+          display: flex !important;
+          justify-content: space-between;
+          max-width: 600px;
+        "
+        class="d-flex gap-1"
+        *ngFor="let reaction of reactions"
+        (click)="goToReactionTimestamp(reaction.timeframe)"
+      >
+        <section *ngIf="reaction.type === 'star'">
+          <i class="bi bi-star-fill"></i>
+          <!-- Render star icon when condition is true -->
+        </section>
+        <section *ngIf="reaction.type == 'snapshot'">
+          <i class="bi bi-camera"></i>
+          <!-- Render camera icon when condition is false -->
+        </section>
+        <section>
+          {{ reaction?.timeframe }}
+        </section>
+        <section>
+          {{ reaction?.postedDate | date : "dd/MM/yy" }}
+        </section>
+        <section>
+          {{ reaction?.author?.name }}
+          {{
+            reaction?.type == "star"
+              ? "starred the video"
+              : "Created a snapshot "
+          }}
+        </section>
+      </div>
+    </ng-container>
+  </div>
+</div>

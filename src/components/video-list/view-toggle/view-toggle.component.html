@@ -1,0 +1,16 @@
+<div class="view-toggle m-3 p-3 pb-0 pt-0">
+  <button
+    (click)="toggleView('grid')"
+    [class.active]="currentView === 'grid'"
+    class="grid-button btn btn-link p-1"
+  >
+    <i class="bi bi-grid-fill"></i>
+  </button>
+  <button
+    (click)="toggleView('list')"
+    [class.active]="currentView === 'list'"
+    class="list-button btn btn-link p-1"
+  >
+    <i class="bi bi-list-task"></i>
+  </button>
+</div>

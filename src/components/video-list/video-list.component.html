@@ -1,0 +1,27 @@
+<ng-container *ngIf="videos && videos.length > 0; else loading">
+  <!-- videos toggler -->
+  <app-view-toggle
+    [currentView]="currentView"
+    (viewChanged)="toggleView($event)"
+  ></app-view-toggle>
+  <div class="row p-5 pt-0 pb-0">
+    <ng-container *ngFor="let video of videos; let i = index">
+      <div
+        class="col-lg-4 col-md-6 mb-4"
+        *ngIf="currentView === 'grid'; else listView"
+      >
+        <!-- videos grid view -->
+        <app-video-grid [video]="video"></app-video-grid>
+      </div>
+      <ng-template #listView>
+        <div class="col-lg-12 mb-4">
+          <!-- videos list view -->
+          <app-video-listview [video]="video"></app-video-listview>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <p class="d-flex justify-content-center align-items-center m-3">Loading Videos...</p>
+</ng-template>

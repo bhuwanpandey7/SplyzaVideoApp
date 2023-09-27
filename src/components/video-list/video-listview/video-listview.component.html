@@ -1,0 +1,21 @@
+<div (click)="getVideoDetails(video)" class="card">
+  <div class="p-1 d-flex justify-content-between align-items-center">
+    <video
+      crossorigin="anonymous"
+      controls
+      [poster]="video.previewUrl"
+      width="300"
+      height="200"
+      class="d-inline"
+    ></video>
+    <h5 class="card-title d-inline m-1">{{ video.title }}</h5>
+    <div class="d-flex flex-row text-end">
+      <label
+        class="d-flex justify-content-center align-items-center-text m-2 flex-grow-1"
+        >{{ video.createdDate | date : "dd/MM/yy" }}</label
+      >
+      <img src="{{ video.author.pictureUrl }}" alt="" />
+      <label class="card-text m-2">{{ video.author.name }}</label>
+    </div>
+  </div>
+</div>

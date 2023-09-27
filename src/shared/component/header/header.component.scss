@@ -1,0 +1,25 @@
+/* header.component.scss */
+.header {
+  background-color: #12123d;
+  color: #fff;
+  position: sticky;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+
+  .header__company-logo {
+    max-width: 100px;
+  }
+
+  .header__user-logo {
+    justify-content: flex-end;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    img {
+      max-width: 10%;
+      height: auto;
+      border-radius: 50%;
+    }
+  }
+}
