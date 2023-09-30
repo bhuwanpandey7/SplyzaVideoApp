@@ -7,6 +7,7 @@ import { VideoDetailsComponent } from './video-details/video-details.component';
 import { VideoListViewComponent } from './video-list/video-listview/video-listview.component';
 import { VideoGridComponent } from './video-list/video-grid/video-grid.component';
 import { ViewToggleComponent } from './video-list/view-toggle/view-toggle.component';
+import { SharedModule } from 'src/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,6 @@ import { ViewToggleComponent } from './video-list/view-toggle/view-toggle.compon
     VideoGridComponent,
     ViewToggleComponent,
   ],
-  imports: [CommonModule, VideoRoutingModule, FormsModule],
+  imports: [VideoRoutingModule, FormsModule, SharedModule],
 })
 export class VideoModule {}

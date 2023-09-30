@@ -1,8 +1,6 @@
 <header class="header">
   <div class="d-flex flex-row justify-content-between">
-    <div class="header__company-logo">
-      <img src="../../../assets/Logo.PNG" alt="Logo" />
-    </div>
+    <ng-content select=".header-slot"></ng-content>
     <div class="header__user-logo m-3">
       <img src="{{ userLogo }}" alt="" />
       <span>{{ userName }}</span>

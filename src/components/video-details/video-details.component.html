@@ -1,13 +1,16 @@
 <!-- Back Button -->
 <div style="left: 6.2rem" class="m-2 ml-5" *ngIf="video && video.url">
   <!-- Video Player -->
-  <button
-    class="btn btn-link btn-link-primary text-sm"
-    (click)="goToVideoList()"
-  >
-    <i class="bi bi-arrow-left"></i>
-    Back
-  </button>
+  <app-header>
+    <button
+      class="header-slot btn btn-link btn-link-primary text-sm"
+      (click)="goToVideoList()"
+    >
+      <i class="bi bi-arrow-left"></i>
+      Back
+    </button>
+  </app-header>
+
   <div class="container d-flex flex-row gap-1 pt-2 pb-2">
     <input
       #title

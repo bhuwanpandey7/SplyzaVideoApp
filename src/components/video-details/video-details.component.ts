@@ -11,7 +11,8 @@ import { ApiService } from 'src/shared/service/video.service';
 import { StarVideoReaction } from '../../shared/models/star-reaction.interface';
 import { VideoDetail } from '../../shared/models/video-detail.interface';
 import { VideoReactionType } from '../../shared/enums/video-reactionType.enum';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, catchError, takeUntil, throwError } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 // import { AuthService } from '../services/auth.service'; // Import your authentication service
 
 @Component({
@@ -34,19 +35,28 @@ export class VideoDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private videoService: ApiService,
-    private userService: UserService // Import and inject your API service // private authService: AuthService // Import and inject your authentication service
+    private userService: UserService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
     // Get the videoId from the route parameters
     const videoId = this.route.snapshot.params['id'];
-
+    this.spinner.show(); // Show the spinner
     // Retrieve video details using the API service
     this.videoService
       .getVideoDetails(videoId)
-      .pipe(takeUntil(this.$destroyed))
+      .pipe(
+        takeUntil(this.$destroyed),
+        // create separate error handling service
+        catchError(() => {
+          this.spinner.hide();
+          return throwError(() => 'Api Error');
+        })
+      )
       .subscribe((video) => {
         this.video = video;
+        this.spinner.hide();
       });
 
     // Retrieve reactions using the API service

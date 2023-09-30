@@ -1,26 +1,18 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
 import { VideoModule } from '../components/video.module';
-import { HeaderComponent } from '../shared/component/header/header.component';
-import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/shared/shared.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent
-  ],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpClientModule,
+    SharedModule,
     VideoModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../../shared/service/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -9,13 +10,20 @@ import { UserService } from '../../../shared/service/user.service';
 export class HeaderComponent implements OnInit {
   userName:  String = '';
   userLogo: String = '';
+  userInfoSubscription: Subscription | undefined;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.loggedInUsername$.subscribe((user) => {
+    this.userInfoSubscription = this.userService.loggedInUsername$.subscribe((user) => {
       this.userName = user.name;
       this.userLogo = user.pictureUrl
     });
+  }
+
+  ngOnDestroy() {
+    if (this.userInfoSubscription) {
+      this.userInfoSubscription.unsubscribe();
+    }
   }
 
 }
