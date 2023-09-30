@@ -40,10 +40,8 @@ export class VideoDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Get the videoId from the route parameters
     const videoId = this.route.snapshot.params['id'];
-    this.spinner.show(); // Show the spinner
-    // Retrieve video details using the API service
+    this.spinner.show();
     this.videoService
       .getVideoDetails(videoId)
       .pipe(
@@ -73,12 +71,23 @@ export class VideoDetailsComponent implements OnInit, OnDestroy {
   }
 
   saveTitle(newTitle: any): void {
+    this.spinner.show();
     // Update the video title using the API service
     this.editedTitle = newTitle;
     this.videoService
       .updateVideoTitle(this.video.id, this.editedTitle)
+      .pipe(
+        // create separate error handling service
+        catchError(() => {
+          this.spinner.hide();
+          return throwError(() => 'Api Error');
+        })
+      )
       .subscribe(() => {
         this.video.title = this.editedTitle;
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 5000);
       });
   }
 
@@ -128,30 +137,15 @@ export class VideoDetailsComponent implements OnInit, OnDestroy {
     const video = this.videoPlayer.nativeElement;
     video.currentTime = timestamp;
     video.pause();
+    if (video) {
+      video.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   private getCurrentVideoTime(): number {
     const video = this.videoPlayer.nativeElement;
     return video.currentTime;
   }
-
-  // refactor later to service
-  // private captureSnapshotBase64(): string {
-  //   const video = this.videoPlayer.nativeElement;
-  //   // Create a canvas element
-  //   const canvas = document.createElement('canvas');
-  //   const ctx = canvas.getContext('2d');
-  //   // Set the canvas dimensions to match the video frame size
-  //   canvas.width = video.videoWidth;
-  //   canvas.height = video.videoHeight;
-  //   // Draw the current video frame onto the canvas
-  //   ctx?.drawImage(video, 0, 0, canvas.width, canvas.height);
-  //   // Convert the canvas content to a data URI with base64 encoding
-  //   const snapshotDataUri = canvas.toDataURL('image/png');
-  //   // Clean up the canvas
-  //   canvas.remove();
-  //   return snapshotDataUri;
-  // }
 
   // Not working while playing need to check
   private captureSnapshotBase64(): string {
@@ -161,8 +155,6 @@ export class VideoDetailsComponent implements OnInit, OnDestroy {
 
     // Check if the video is ready to capture a snapshot
     if (video.readyState >= 4) {
-      // Ready state 4 indicates 'canplaythrough'
-      // Set the canvas dimensions to match the video frame size
       video.pause();
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -178,15 +170,10 @@ export class VideoDetailsComponent implements OnInit, OnDestroy {
 
       // Set the src of the Image element to the snapshot data URI
       image.src = canvas.toDataURL('image/png');
-
-      // Clean up the canvas
       canvas.remove();
-
-      // You can now use the 'image' element or its 'src' as needed
       return image.src;
     } else {
-      // Video is not ready, handle accordingly (e.g., retry later)
-      return ''; // or throw an error
+      return '';
     }
   }
 

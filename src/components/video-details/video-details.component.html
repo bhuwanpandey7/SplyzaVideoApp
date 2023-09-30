@@ -1,5 +1,4 @@
-<!-- Back Button -->
-<div style="left: 6.2rem" class="m-2 ml-5" *ngIf="video && video.url">
+<div class="videoDetailsWrapper ml-5" *ngIf="video && video.url">
   <!-- Video Player -->
   <app-header>
     <button
@@ -55,45 +54,19 @@
   </div>
 
   <!-- Reactions List -->
-  <div
-    style="left: 6.2rem; position: relative"
-    class="d-flex flex-column gap-1 pb-1 reactions-list"
-  >
+  <div class="reactions-container">
     <h4>Reactions</h4>
-    <ng-container *ngIf="reactions && reactions.length > 0">
-      <div
-        style="
-          display: flex !important;
-          justify-content: space-between;
-          max-width: 600px;
-        "
-        class="d-flex gap-1"
-        *ngFor="let reaction of reactions"
-        (click)="goToReactionTimestamp(reaction.timeframe)"
-      >
-        <section *ngIf="reaction.type === 'star'">
-          <i class="bi bi-star-fill"></i>
-          <!-- Render star icon when condition is true -->
-        </section>
-        <section *ngIf="reaction.type == 'snapshot'">
-          <i class="bi bi-camera"></i>
-          <!-- Render camera icon when condition is false -->
-        </section>
-        <section>
-          {{ reaction?.timeframe }}
-        </section>
-        <section>
-          {{ reaction?.postedDate | date : "dd/MM/yy" }}
-        </section>
-        <section>
-          {{ reaction?.author?.name }}
-          {{
-            reaction?.type == "star"
-              ? "starred the video"
-              : "Created a snapshot "
-          }}
-        </section>
-      </div>
-    </ng-container>
+    <div class="reactions-list">
+      <ng-container *ngIf="reactions && reactions.length > 0; else noReactions">
+        <video-reaction
+          *ngFor="let reaction of reactions"
+          [reaction]="reaction"
+          [goToReactionTimestamp]="goToReactionTimestamp.bind(this)"
+        ></video-reaction>
+      </ng-container>
+      <ng-template #noReactions>
+        <label>No Reactions Found</label>
+      </ng-template>
+    </div>
   </div>
 </div>

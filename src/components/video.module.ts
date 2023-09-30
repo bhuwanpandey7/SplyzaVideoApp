@@ -8,6 +8,7 @@ import { VideoListViewComponent } from './video-list/video-listview/video-listvi
 import { VideoGridComponent } from './video-list/video-grid/video-grid.component';
 import { ViewToggleComponent } from './video-list/view-toggle/view-toggle.component';
 import { SharedModule } from 'src/shared/shared.module';
+import { ReactionComponent } from './video-details/reaction/reaction.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SharedModule } from 'src/shared/shared.module';
     VideoListViewComponent,
     VideoGridComponent,
     ViewToggleComponent,
+    ReactionComponent,
   ],
   imports: [VideoRoutingModule, FormsModule, SharedModule],
 })

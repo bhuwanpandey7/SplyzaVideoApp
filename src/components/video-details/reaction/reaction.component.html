@@ -1,0 +1,14 @@
+<div class="video-reaction" (click)="goToReactionTimestamp(reaction.timeframe)">
+  <section *ngIf="reaction.type === 'star'">
+    <i class="bi bi-star-fill"></i>
+  </section>
+  <section *ngIf="reaction.type == 'snapshot'">
+    <i class="bi bi-camera"></i>
+  </section>
+  <section>{{ reaction?.timeframe }}</section>
+  <section>{{ reaction?.postedDate | date : "dd/MM/yy" }}</section>
+  <section>
+    {{ reaction?.author?.name }}
+    {{ reaction?.type == "star" ? "starred the video" : "Created a snapshot" }}
+  </section>
+</div>
